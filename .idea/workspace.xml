@@ -8,11 +8,18 @@
   <component name="ChangeListManager">
     <list default="true" id="6c591047-5311-4de7-9ddb-1c6072dbab2b" name="Changes" comment="Finished Game">
       <change afterPath="$PROJECT_DIR$/.idea/artifacts/MineSweeper_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/2efeb1e3-3885-4ae8-9b8c-596cacf65470.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/2efeb1e3-3885-4ae8-9b8c-596cacf65470/storage_v2/_src_/database/minesweeperdb.5IPXhg.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/2efeb1e3-3885-4ae8-9b8c-596cacf65470/storage_v2/_src_/database/minesweeperdb.5IPXhg/schema/information_schema.FNRwLQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/2efeb1e3-3885-4ae8-9b8c-596cacf65470/storage_v2/_src_/database/minesweeperdb.5IPXhg/schema/pg_catalog.0S1ZNQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/2efeb1e3-3885-4ae8-9b8c-596cacf65470/storage_v2/_src_/database/minesweeperdb.5IPXhg/schema/public.abK9xQ.meta" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/libraries/postgresql_42_7_3.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Database.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/MenuFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MineSweeper.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MineSweeper.iml" afterDir="false" />
@@ -37,6 +44,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -95,7 +107,7 @@
       <workItem from="1714754317196" duration="1013000" />
       <workItem from="1715019962721" duration="615000" />
       <workItem from="1715471486699" duration="50000" />
-      <workItem from="1715517628603" duration="22895000" />
+      <workItem from="1715517628603" duration="23243000" />
     </task>
     <task id="LOCAL-00001" summary="Finished Game">
       <created>1714752593580</created>
@@ -115,7 +127,34 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="database" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="database" />
+                </option>
+              </RecentGroup>
+            </list>
           </value>
         </entry>
       </map>

@@ -5,13 +5,18 @@ import java.util.Random;
 import javax.swing.*;
 
 public class MineSweeper {
-    private final int NUMBER_OF_ROWS = 10;
-    private final int NUMBER_OF_COLS = NUMBER_OF_ROWS;
+
+    private final Database db;
+    private final String player;
+    private final String difficulty;
+
+    private final int NUMBER_OF_ROWS;
+    private final int NUMBER_OF_COLS;
     private final int TILE_SIZE = 70;
-    private final int WINDOW_WIDTH = NUMBER_OF_COLS * TILE_SIZE;
-    private final int WINDOW_HEIGHT = WINDOW_WIDTH + 50;
-    private final int BOARD_WIDTH = WINDOW_WIDTH;
-    private final int BOARD_HEIGHT = WINDOW_WIDTH;
+    private final int WINDOW_WIDTH;
+    private final int WINDOW_HEIGHT;
+    private final int BOARD_WIDTH;
+    private final int BOARD_HEIGHT;
 
     private JFrame frame;
     private JLabel scoreLabel;
@@ -24,10 +29,11 @@ public class MineSweeper {
     private int time = 0;
     private int countFlags = 0;
     private boolean gameOver = false;
+    private boolean gameWon = false;
 
-    private Tile[][] tiles = new Tile[NUMBER_OF_ROWS][NUMBER_OF_COLS];
-    private ArrayList<Tile> mines = new ArrayList<>();
-    private final int NUMBER_OF_MINES = 20;
+    private Tile[][] tiles;
+    private ArrayList<Tile> mines;
+    private final int NUMBER_OF_MINES;
 
 
     private Timer timer;
@@ -44,7 +50,19 @@ public class MineSweeper {
         }
     }
 
-    MineSweeper() {
+    MineSweeper(int numberOfRows, int numberOfMines, String player, Database db, String difficulty) {
+        this.db = db;
+        this.player = player;
+        this.difficulty = difficulty;
+        this.NUMBER_OF_ROWS = numberOfRows;
+        this.NUMBER_OF_COLS = numberOfRows;
+        this.NUMBER_OF_MINES = numberOfMines;
+        this.WINDOW_WIDTH = NUMBER_OF_COLS * TILE_SIZE;
+        this.WINDOW_HEIGHT = WINDOW_WIDTH + 50;
+        this.BOARD_HEIGHT = WINDOW_HEIGHT;
+        this.BOARD_WIDTH = WINDOW_WIDTH;
+        this.tiles = new Tile[NUMBER_OF_ROWS][NUMBER_OF_COLS];
+
         this.frame = createFrame();
         this.scoreLabel = createScoreLabel();
         this.timerLabel = createTimerLabel();
@@ -64,7 +82,10 @@ public class MineSweeper {
         timer = new Timer(1000, e -> {
             if (gameOver){
                 timer.stop();
-                scoreLabel.setText("Game Over!");
+                backToMenu();
+                if (!gameWon)
+                    scoreLabel.setText("Game Over!");
+
             }
             time++;
             timerLabel.setText("Time: " + time);
@@ -195,8 +216,10 @@ public class MineSweeper {
         System.out.println("revealed");
 
         if (score >= NUMBER_OF_ROWS*NUMBER_OF_COLS - NUMBER_OF_MINES){
+            gameWon  = true;
             gameOver = true;
             scoreLabel.setText("All Mines cleared!");
+            db.addGame(player, time, difficulty);
         }
     }
 
@@ -239,6 +262,20 @@ public class MineSweeper {
         if (r < 0 || r >= NUMBER_OF_ROWS || c < 0 || c >= NUMBER_OF_COLS)
             return 0;
         return checkMine(tiles[r][c]) ? 1 : 0;
+    }
+
+    public void backToMenu () {
+        JButton returnButton = new JButton("Return");
+        returnButton.setFont(new Font("Arial", Font.PLAIN, 10));
+        returnButton.setOpaque(false);
+        returnButton.addActionListener(e -> {
+            frame.setVisible(false);
+            frame.dispose();
+            new MenuFrame(db).setPlayer(player);
+        });
+
+        textPanel.add(returnButton);
+
     }
 
 }

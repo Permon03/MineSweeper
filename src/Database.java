@@ -88,4 +88,34 @@ public class Database {
             throw new RuntimeException(e);
         }
     }
+
+    public String showScoreboard (String difficulty){
+
+        try {
+            PreparedStatement getScoreboard = connection.prepareStatement("SELECT name, time, difficulty FROM games WHERE difficulty=? ORDER BY time");
+            getScoreboard.setString(1, difficulty);
+
+            ResultSet rs = getScoreboard.executeQuery();
+            StringBuilder scoreboardBuilder = new StringBuilder();
+            int count = 1;
+            while(rs.next() && count<=8){
+                scoreboardBuilder
+                        .append("<html>")
+                        .append(count)
+                        .append(". Name: ")
+                        .append(rs.getString(1))
+                        .append("   |   Time: ")
+                        .append(rs.getTime(2))
+                        .append("   |   Difficulty: ")
+                        .append(rs.getString(3))
+                        .append("<br>");
+                count++;
+            }
+            if (!scoreboardBuilder.isEmpty())
+                scoreboardBuilder.append("</html>");
+            return scoreboardBuilder.toString();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

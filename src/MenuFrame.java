@@ -1,11 +1,5 @@
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.xml.crypto.Data;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Objects;
-import java.util.SimpleTimeZone;
 
 public class MenuFrame {
     private final Database db;
@@ -15,20 +9,14 @@ public class MenuFrame {
     private final int TOP_LABEL_HEIGHT = 35;
 
     private String player;
-    private MineSweeper game;
 
 
     private JFrame frame;
 
     private JTextField playerNameField;
-    private JButton selectButton;
-    private JButton createNewPlayerButton;
     private JLabel playerLabel;
     private JLabel topLabel;
 
-    private JButton easyButton;
-    private JButton mediumButton;
-    private JButton hardButton;
     private JLabel bottomLabel;
 
     public MenuFrame (Database db){
@@ -43,6 +31,7 @@ public class MenuFrame {
 
         createTop();
         createBottom();
+        createScoreboard();
 
         frame.add(topLabel, BorderLayout.NORTH);
         frame.add(bottomLabel, BorderLayout.SOUTH);
@@ -57,7 +46,7 @@ public class MenuFrame {
         playerNameField.setPreferredSize(new Dimension(100, 20));
 
         // Button to select Player
-        this.selectButton = new JButton("Select Player");
+        JButton selectButton = new JButton("Select Player");
         selectButton.setFont(new Font("Arial", Font.PLAIN, 15));
         selectButton.setOpaque(false);
         selectButton.addActionListener(e -> {
@@ -74,7 +63,7 @@ public class MenuFrame {
 
 
         // Button to create new player
-        this.createNewPlayerButton = new JButton("Create new Player");
+        JButton createNewPlayerButton = new JButton("Create new Player");
         createNewPlayerButton.setFont(new Font("Arial", Font.PLAIN, 15));
         createNewPlayerButton.setOpaque(false);
         createNewPlayerButton.addActionListener(e -> {
@@ -112,17 +101,17 @@ public class MenuFrame {
     }
 
     public void createBottom(){
-        this.easyButton = new JButton("Easy");
+        JButton easyButton = new JButton("Easy");
         easyButton.setFont(new Font("Arial", Font.PLAIN, 15));
         easyButton.setOpaque(false);
         easyButton.addActionListener(e -> startGame(1));
 
-        this.mediumButton = new JButton("Medium");
+        JButton mediumButton = new JButton("Medium");
         mediumButton.setFont(new Font("Arial", Font.PLAIN, 15));
         mediumButton.setOpaque(false);
         mediumButton.addActionListener(e -> startGame(2));
 
-        this.hardButton = new JButton("Hard");
+        JButton hardButton = new JButton("Hard");
         hardButton.setFont(new Font("Arial", Font.PLAIN, 15));
         hardButton.setOpaque(false);
         hardButton.addActionListener(e -> startGame(3));
@@ -152,9 +141,9 @@ public class MenuFrame {
             frame.setVisible(false);
             frame.dispose();
             switch (diff){
-                case 1 -> game = new MineSweeper(8, 6, player, db, "easy");
-                case 2 -> game = new MineSweeper(10, 15, player, db, "medium");
-                case 3 -> game = new MineSweeper(14, 35, player, db, "hard");
+                case 1 -> new MineSweeper(8, 6, player, db, "easy");
+                case 2 -> new MineSweeper(10, 15, player, db, "medium");
+                case 3 -> new MineSweeper(14, 35, player, db, "hard");
             }
         }
 
@@ -166,6 +155,61 @@ public class MenuFrame {
             return false;
         }
         return true;
+    }
+
+
+    public void createScoreboard(){
+        JLabel scoreboardContainer = new JLabel();
+        scoreboardContainer.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT-(2*TOP_LABEL_HEIGHT)));
+        scoreboardContainer.setLayout(new BorderLayout());
+        scoreboardContainer.setBackground(Color.lightGray);
+        scoreboardContainer.setOpaque(true);
+
+        JLabel scoreboardLabel = new JLabel("Scoreboard: ");
+        scoreboardLabel.setFont(new Font("Arial", Font.PLAIN, 13));
+
+
+        JLabel scoreBoardLabelCenter = new JLabel();
+        scoreBoardLabelCenter.setFont(new Font("Arial", Font.PLAIN, 15));
+
+
+        JButton scoreButton1 = new JButton("Easy");
+        scoreButton1.setFont(new Font("Arial", Font.PLAIN, 13));
+        scoreButton1.addActionListener(e -> scoreBoardLabelCenter.setText(db.showScoreboard("easy")));
+
+
+        JButton scoreButton2 = new JButton("Medium");
+        scoreButton2.setFont(new Font("Arial", Font.PLAIN, 13));
+        scoreButton2.addActionListener(e -> scoreBoardLabelCenter.setText(db.showScoreboard("medium")));
+
+        JButton scoreButton3 = new JButton("Hard");
+        scoreButton3.setFont(new Font("Arial", Font.PLAIN, 13));
+        scoreButton3.addActionListener(e -> scoreBoardLabelCenter.setText(db.showScoreboard("hard")));
+
+        JLabel scoreboardTop = new JLabel();
+        scoreboardTop.setPreferredSize(new Dimension(WINDOW_WIDTH, 25));
+        scoreboardTop.setLayout(new FlowLayout(FlowLayout.CENTER, 2, 0));
+
+        scoreboardTop.add(scoreboardLabel);
+        scoreboardTop.add(scoreButton1);
+        scoreboardTop.add(scoreButton2);
+        scoreboardTop.add(scoreButton3);
+
+        scoreboardContainer.add(scoreboardTop, BorderLayout.NORTH);
+
+
+        scoreBoardLabelCenter.setText(db.showScoreboard("easy"));
+
+        JLabel scoreBoardContainerCenter = new JLabel();
+        scoreBoardContainerCenter.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT-(2*TOP_LABEL_HEIGHT)-25));
+        scoreBoardContainerCenter.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 5));
+
+        scoreBoardContainerCenter.add(scoreBoardLabelCenter);
+
+        scoreboardContainer.add(scoreBoardContainerCenter, BorderLayout.CENTER);
+
+
+        frame.add(scoreboardContainer, BorderLayout.CENTER);
     }
 
 }
